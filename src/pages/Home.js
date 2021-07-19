@@ -4,6 +4,7 @@ import { Container, Grid, Button } from "@material-ui/core";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import CardContact from "../component/CardContact";
 import ModalCreate from "../component/ModalCreate";
@@ -16,6 +17,7 @@ function Home() {
   const [searchText, setSearchText] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [mode, setMode] = useState("");
+  const [loading, setLoading] = useState(false);
   const [dataForm, setDataForm] = useState({
     firstName: "",
     lastName: "",
@@ -32,14 +34,18 @@ function Home() {
 
   //get all data contact
   const getContacts = async () => {
+    setLoading(true);
+
     const dataContact = await axios
       .get(`${apiURL}/contact`)
       .then(function (res) {
         const data = res?.data?.data;
         setContact(data);
+        setLoading(false);
       })
       .catch(function (error) {
         console.log(error);
+        setLoading(false);
       });
 
     return dataContact;
@@ -63,14 +69,18 @@ function Home() {
       .delete(`${apiURL}/contact/${id}`)
       .then(function (res) {
         getContacts();
+        setLoading(false);
       })
       .catch(function (error) {
+        setLoading(false);
         console.log(error);
       });
   };
 
   //edit contact
   const editContact = async () => {
+    setLoading(true);
+
     const id = dataForm.id;
     const newUpdate = { ...dataForm };
 
@@ -79,11 +89,12 @@ function Home() {
     await axios
       .put(`${apiURL}/contact/${id}`, newUpdate)
       .then(function (res) {
-        console.log(res);
+        setLoading(false);
         getContacts();
       })
       .catch(function (error) {
         console.log(error);
+        setLoading(false);
       });
   };
 
@@ -154,20 +165,25 @@ function Home() {
           </Button>
         </Grid>
       </Grid>
-      <Grid container spacing={2}>
-        {Array.from(getSearch() || []).map((item) => (
-          <Grid item xs={3}>
-            <CardContact
-              data={item}
-              deleteContact={deleteContact}
-              setDataForm={setDataForm}
-              setOpenModal={setOpenModal}
-              setMode={setMode}
-              setConfirmDelete={setConfirmDelete}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      {loading ? (
+        <CircularProgress disableShrink />
+      ) : (
+        <Grid container spacing={2}>
+          {Array.from(getSearch() || []).map((item) => (
+            <Grid item xs={3} alignItems="stretch">
+              <CardContact
+                data={item}
+                deleteContact={deleteContact}
+                setDataForm={setDataForm}
+                setOpenModal={setOpenModal}
+                setMode={setMode}
+                setConfirmDelete={setConfirmDelete}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      )}
+
       {openModal && (
         <ModalCreate
           open={openModal}

@@ -7,7 +7,6 @@ import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
-import { InputLabel } from "@material-ui/core";
 
 const useStyles = makeStyles({
   avatar: {
@@ -52,7 +51,6 @@ export default function ModalCreate(props) {
       <DialogTitle id="simple-dialog-title">Create Contact</DialogTitle>
 
       <DialogContent>
-        <InputLabel>First Name</InputLabel>
         <TextField
           className={classes.input}
           fullWidth
@@ -60,10 +58,9 @@ export default function ModalCreate(props) {
           name="firstName"
           onChange={handleChange}
           margin="dense"
-          label="Outlined"
+          label="First Name"
           variant="outlined"
         />
-        <InputLabel>Last Name</InputLabel>
 
         <TextField
           className={classes.input}
@@ -72,10 +69,9 @@ export default function ModalCreate(props) {
           onChange={handleChange}
           name="lastName"
           margin="dense"
-          label="Outlined"
+          label="Last Name"
           variant="outlined"
         />
-        <InputLabel>Age</InputLabel>
 
         <TextField
           className={classes.input}
@@ -84,12 +80,11 @@ export default function ModalCreate(props) {
           onChange={handleChange}
           name="age"
           margin="dense"
-          label="Outlined"
+          label="Age"
           variant="outlined"
           type="number"
           InputProps={{ inputProps: { min: 0, max: 100 } }}
         />
-        <InputLabel>Link Photo</InputLabel>
 
         <TextField
           className={classes.input}
@@ -98,7 +93,7 @@ export default function ModalCreate(props) {
           name="photo"
           fullWidth
           margin="dense"
-          label="Outlined"
+          label="Link Photo"
           variant="outlined"
         />
       </DialogContent>

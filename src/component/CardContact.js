@@ -58,7 +58,7 @@ export default function MediaCard({
           <Typography style={{ fontSize: 10, color: "#949494" }}>
             Name
           </Typography>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="h6">
             {data?.firstName} {data?.lastName}
           </Typography>
           <Typography style={{ fontSize: 10, color: "#949494" }}>
